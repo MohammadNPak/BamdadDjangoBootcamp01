@@ -19,5 +19,6 @@ from django.urls import include
 
 urlpatterns = [
     path('admin/', admin.site.urls),
+    # change url file
     path('second_app/', include('second_app.urls')),
 ]
