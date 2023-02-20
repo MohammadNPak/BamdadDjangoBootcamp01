@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        .post {
+            /* background-color: blueviolet; */
+            border: 1px black solid;
+            border-radius: 8px;
+            padding: 8px;
+            width: 200px;
+            height: 250px;
+        }
+
+        .title {
+            border: 1px solid black;
+            font-size: 16pt;
+            border-radius: 5px;
+            background-color: #c1c1c1;
+        }
+
+        .post-body {
+            text-align: justify;
+        }
+
+        .date {
+            font-size: 9pt;
+            color: blueviolet;
+        }
+    </style>
+</head>
+
+<body>
+    <h1>explore</h1>
+    {% for post in posts %}
+    <div class="post">
+
+        <div class="author">
+            <img src="{{post.author_picture}}" alt="profile pic" srcset="">
+
+            {{ post.author }}
+        </div>
+        <div class="title">
+            {{post.title}}
+        </div>
+        <div class="post-body">
+            {{post.body}}
+            Lorem ipsum dolor sit amet consectetur adipisicing elit. Voluptatem eligendi, quibusdam, esse voluptatum
+            labore facilis quis quod ipsam consectetur sint nobis placeat possimus perferendis in voluptatibus aliquam
+            vel dicta accusantium.
+        </div>
+
+        <div class="date">
+            {{post.date}}
+        </div>
+    </div>
+    {% endfor %}
+    
+
+</body>
+
+</html>
