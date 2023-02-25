@@ -36,14 +36,14 @@
 
 
 <body>
-    <h1>explore</h1>
+    <h1>post detail</h1>
     
-    {% for post in posts %}
+    
     <div class="post">
         <div class="author">
-            <img src="{{post.author_picture}}" alt="profile pic" srcset="">
+            <img src="{{post.author.picture}}" alt="profile pic" srcset="">
 
-            {{ post.author }}
+            {{ post.author.username }}
         </div>
         <div class="title">
             {{post.title}}
@@ -56,6 +56,21 @@
         <div class="date">
             {{post.date}}
         </div>
+    </div>
+    {% for comment in post.comment_set.all %}
+    
+    <div class="comment">
+        <div class="title">
+            {{comment.author.username}}
+        </div>
+        <div class="post-body">
+            {{comment.body}}
+
+        </div>
+        <div>
+            {{comment.date|timesince}}
+        </div>
+
     </div>
     {% endfor %}
     

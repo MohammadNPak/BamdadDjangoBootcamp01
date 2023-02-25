@@ -1,20 +1,13 @@
-from django.shortcuts import render
+from django.shortcuts import render,get_object_or_404
+from .models import Post
 
 # Create your views here.
 
 def explore(request):
-    p1 = {
-        # 'author_picture': https://www.google.com/url?sa=i&url=https%3A%2F%2Fwww.pexels.com%2Fsearch%2Fprofile%2F&psig=AOvVaw2ScT6HsSHutEEZGZeFFviK&ust=1676993113663000&source=images&cd=vfe&ved=0CA8QjRxqFwoTCIiBsqi0pP0CFQAAAAAdAAAAABAE
-        'author':'mohammad',
-        'body':"hello this is my first post ",
-        'title': 'first post',
-        'date': '1401-12-1',
-    }
-    p2 = {
-        # 'author_picture': https://www.google.com/url?sa=i&url=https%3A%2F%2Fwww.pexels.com%2Fsearch%2Fprofile%2F&psig=AOvVaw2ScT6HsSHutEEZGZeFFviK&ust=1676993113663000&source=images&cd=vfe&ved=0CA8QjRxqFwoTCIiBsqi0pP0CFQAAAAAdAAAAABAE
-        'author':'mohammad',
-        'body':"hello this is my second post ",
-        'title': 'second post',
-        'date': '1401-12-1',
-    }
-    return render(request,'socialnetwork/explore.html',context={'posts':[p1,p2]})
+    p = Post.objects.all()
+    return render(request,'socialnetwork/explore.html',context={'posts':p})
+
+def post_detail(request,id):
+  
+    p = get_object_or_404(Post,id=id)
+    return render(request,'socialnetwork/post_detail.html',{'post':p})
