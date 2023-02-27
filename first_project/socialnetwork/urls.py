@@ -1,9 +1,9 @@
 from django.urls import path
-from socialnetwork.views import explore,post_detail
+from socialnetwork.views import post_detail,post_list
 
 
 
 urlpatterns = [
-    path('',explore,name='explore'),
-    path('post/<int:id>',post_detail,name='post_detail'),
+    path('',post_list,name='post_list'),
+    path('post/<int:pk>',post_detail,name='post_detail'),
 ]
