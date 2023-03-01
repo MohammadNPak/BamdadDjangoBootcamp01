@@ -8,6 +8,12 @@ class User(models.Model):
     password = models.CharField(max_length= 1024)
     bio = models.TextField()
 
+# user = User.objects.first()
+# user.post_set
+
+
+# post = Post.objects.first()
+# post.author
 
 class Post(models.Model):
     author = models.ForeignKey(User,on_delete=models.CASCADE)
@@ -25,3 +31,5 @@ class Comment(models.Model):
     body = models.TextField()
     date = models.DateTimeField(auto_now_add=True)
     
+# post = Post.objects.get(id=1)
+# post.comment_set.all()
