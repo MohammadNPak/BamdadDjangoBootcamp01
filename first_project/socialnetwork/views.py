@@ -18,12 +18,10 @@ def post_list(request):
             author=User.objects.get(id=1),
             title=new_post_title)
 
-
         posts = Post.objects.all()
         return render(request,'socialnetwork/post_list.html',context={'posts':posts})
 
 
 def post_detail(request,pk):
-  
     post = get_object_or_404(Post,pk=pk)
     return render(request,'socialnetwork/post_detail.html',{'post':post})

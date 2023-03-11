@@ -1,12 +1,33 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
-</head>
-<body>
-    <h1>register</h1>
-</body>
-</html>
+{% extends 'base.html' %}
+{% load static %}
+{% block content %}
+<section class="container">
+    <h1 class="large text-primary">
+      Sign Up
+    </h1>
+    <p class="lead"><i class="fas fa-user"></i> Create Your Account</p>
+    <form action="{% url 'register' %}" class="form" method="post">
+        {% csrf_token %}
+      <div class="form-group">
+        <input type="text" placeholder="UserName" required name="username" />
+      </div>
+      <div class="form-group">
+        <input type="email" placeholder="Email Address" name="email" />
+        <small class="form-text">
+          This site uses Gravatar, so if you want a profile image, use a
+          Gravatar email
+        </small>
+      </div>
+      <div class="form-group">
+        <input type="password" placeholder="Password"  name="password1" />
+      </div>
+      <div class="form-group">
+        <input type="password" placeholder="Confirm Password"  name="password2" />
+      </div>
+      <input type="submit" value="Register" class="btn btn-primary" />
+    </form>
+    <p class="my-1">
+      Already have an account? <a href="login.html">Sign In</a>
+    </p>
+  </section>
+{% endblock content %}
