@@ -3,9 +3,15 @@
 {% block content %}
 <section class="container">
     <!-- Alert -->
+    {% if messages %}
+    {% for message in messages %}
+    
     <div class="alert alert-danger">
-      Invalid Credentials
+      {{message}}
     </div>
+    
+    {% endfor %}
+    {% endif %}
 
     <h1 class="large text-primary">
       Sign In

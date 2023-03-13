@@ -13,19 +13,25 @@
       </li>
       {% if request.user.username %}
       <li>
-        <a href="login.html" title="Logout">
+        <a href="login.html" title="UserProfile">
           <span class="hide-sm">{{request.user.username}}</span></a
         >
       </li>
-      {% else %}
       <li>
-        <a href="login.html" title="Logout">
+        <a href="{% url 'logout' %}" title="Logout">
           <i class="fas fa-sign-out-alt"></i>
           <span class="hide-sm">Logout</span></a
         >
         
       </li>
-
+      {% else %}
+      <li>
+        <a href="{% url 'login' %}" title="Login">
+          <i class="fas fa-sign-in-alt"></i>
+          <span class="hide-sm">Login</span></a
+        >
+        
+      </li>
       {% endif %}
     </ul>
   </nav>
