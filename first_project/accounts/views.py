@@ -3,6 +3,8 @@ from django.contrib.auth.models import User
 from django.shortcuts import redirect,reverse
 from django.contrib.auth import authenticate,login as django_login,logout as django_logout
 from django.contrib import messages
+from django.shortcuts import get_object_or_404
+from .models import UserProfile
 # Create your views here.
 
 def login(request):
@@ -37,3 +39,9 @@ def register(request):
 def logout(request):
     django_logout(request)
     return redirect('logout_done')
+
+
+
+def profile_detail(request,username):
+    user_profile = get_object_or_404(UserProfile,user__username=username)
+    return render(request,'accounts/profile_detail.html',{"profile":user_profile})
