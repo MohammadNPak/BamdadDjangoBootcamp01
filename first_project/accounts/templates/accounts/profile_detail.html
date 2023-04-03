@@ -11,7 +11,7 @@
         <div class="profile-top bg-primary p-2">
           <img
             class="round-img my-1"
-            src="https://www.gravatar.com/avatar/205e460b479e2e5b48aec07710c08d50?s=200"
+            src="{{ profile.profile_picture.url}}"
             alt=""
           />
 
@@ -48,58 +48,59 @@
         </div>
         <!-- About -->
         <div class="profile-about bg-light p-2">
-          <h2 class="text-primary">John's Bio</h2>
+          <h2 class="text-primary">{{profile.user.first_name}}'s Bio</h2>
           <p>
-            Lorem ipsum dolor sit amet, consectetur adipisicing elit. Magni,
-            distinctio tempora. Obcaecati vero ad similique numquam. Commodi
-            incidunt quia non!
+            {{profile.bio}}
           </p>
           <div class="line"></div>
           <h2 class="text-primary">Skill Set</h2>
           <div class="skills">
-            <div class="p-1"><i class="fas fa-check"></i> HTML</div>
-            <div class="p-1"><i class="fas fa-check"></i> CSS</div>
-            <div class="p-1"><i class="fas fa-check"></i> JavaScript</div>
-            <div class="p-1"><i class="fas fa-check"></i> Python</div>
+            {% for skill in profile.skill.all %}
+            
+            <div class="p-1"><i class="fas fa-check"></i> {{skill.name}}</div>
+            {% endfor %}
           </div>
         </div>
         <!-- Experience -->
         <div class="profile-exp bg-white p-2">
           <h2 class="text-primary">Experiences</h2>
+          {% for experience in profile.experience_set.all  %}
           <div>
-            <h3>Microsoft</h3>
-            <p>Oct 2011 - Current</p>
-            <p><strong>Position: </strong> Senior Developer</p>
+            <h3>{{experience.company}}</h3>
+            <p>{{experience.start}} - 
+              {% if experience.is_continue %}
+              Current
+              {% else %}
+              {{experience.end}}
+              {% endif %} </p>
+            <p><strong>Position: </strong>{{experience.position}}</p>
             <p>
-              <strong>Description: </strong>Lorem ipsum dolor sit amet
-              consectetur, adipisicing elit. Perspiciatis in sed officiis,
-              dolorem amet cum?
+              <strong>Description: </strong>{{experience.description}}
             </p>
           </div>
-          <div>
-            <h3>Sun Microsystems</h3>
-            <p>Oct 2004 - Nov 2010</p>
-            <p><strong>Position: </strong> Systems Admin</p>
-            <p>
-              <strong>Description: </strong>Lorem ipsum dolor sit amet
-              consectetur, adipisicing elit. Perspiciatis in sed officiis,
-              dolorem amet cum?
-            </p>
-          </div>
+          
+          {% endfor %}
+          
         </div>
         <!-- Education -->
         <div class="profile-edu bg-white p-2">
           <h2 class="text-primary">Education</h2>
           <div>
-            <h3>University Of Washington</h3>
-            <p>Sep 1993 - June 1999</p>
-            <p><strong>Degree: </strong> Masters</p>
-            <p><strong>Field Of Study: </strong> Computer Science</p>
+            {% for education in profile.education_set.all %}
+            <h3>{{education.university}}</h3>
+            <p>{{education.start}} -  
+              {% if education.is_continue %}
+                Current
+              {% else %}
+              {{education.end}}
+              {% endif %}</p>
+            <p><strong>Degree: </strong> {{education.degree}}</p>
+            <p><strong>Field Of Study: </strong> {{education.field_of_study}}</p>
             <p>
-              <strong>Description: </strong>Lorem ipsum dolor sit amet
-              consectetur, adipisicing elit. Perspiciatis in sed officiis,
-              dolorem amet cum?
+              <strong>Description: </strong>{{education.description}}
             </p>
+            
+            {% endfor %}
           </div>
         </div>
         <!-- Github Repos -->
@@ -107,59 +108,26 @@
           <h2 class="text-primary my-1">
             <i class="fab fa-github"></i> Github Repos
           </h2>
+          {% for repo in profile.githubrepos_set.all %}
+          
+          
           <div class="repo bg-white my-1 p-1">
             <div>
-              <h4><a href="#">Repo One</a></h4>
+              <h4><a href="#">{{repo.title}}</a></h4>
               <p>
-                Lorem ipsum dolor sit amet consectetur adipisicing elit.
-                Facilis, tenetur.
+                {{repo.description}}
               </p>
             </div>
 
             <div>
               <ul>
-                <li class="badge badge-primary">Stars: 44</li>
-                <li class="badge badge-dark">Watchers: 20</li>
-                <li class="badge badge-light">Forks: 25</li>
+                <li class="badge badge-primary">Stars: {{repo.Stars}}</li>
+                <li class="badge badge-dark">Watchers: {{repo.Watchers}}</li>
+                <li class="badge badge-light">Forks: {{repo.Forks}}</li>
               </ul>
             </div>
           </div>
-
-          <div class="repo bg-white my-1 p-1">
-            <div>
-              <h4><a href="#">Repo Two</a></h4>
-              <p>
-                Lorem ipsum dolor sit amet consectetur adipisicing elit.
-                Facilis, tenetur.
-              </p>
-            </div>
-
-            <div>
-              <ul>
-                <li class="badge badge-primary">Stars: 44</li>
-                <li class="badge badge-dark">Watchers: 20</li>
-                <li class="badge badge-light">Forks: 25</li>
-              </ul>
-            </div>
-          </div>
-
-          <div class="repo bg-white my-1 p-1">
-            <div>
-              <h4><a href="#">Repo One</a></h4>
-              <p>
-                Lorem ipsum dolor sit amet consectetur adipisicing elit.
-                Facilis, tenetur.
-              </p>
-            </div>
-
-            <div>
-              <ul>
-                <li class="badge badge-primary">Stars: 44</li>
-                <li class="badge badge-dark">Watchers: 20</li>
-                <li class="badge badge-light">Forks: 25</li>
-              </ul>
-            </div>
-          </div>
+          {% endfor %}
         </div>
       </div>
     </section>

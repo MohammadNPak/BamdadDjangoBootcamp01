@@ -28,7 +28,7 @@ class UserProfile(models.Model):
     linkedin = models.URLField(null=True,blank=True)
     instagram = models.URLField(null=True,blank=True)
 
-    github_username = models.CharField(max_length=256,null=True,blank=True)
+    github_username = models.CharField(max_length=256)
     location = models.CharField(max_length=128,null=True,blank=True)
     company = models.CharField(max_length=256,null=True,blank=True)
     website = models.URLField(null=True,blank=True)
@@ -36,14 +36,49 @@ class UserProfile(models.Model):
     def __str__(self) -> str:
          return self.user.username+" | profile"
 
+    def update_repos(self):
+        response = requests.get(f"https://api.github.com/users/{self.github_username}/repos")
+        if response.status_code==200:
+            repos = response.json()
+            github_repos_objects = []
+            for repo in repos:
+                title = repo["name"]
+                description = repo["description"]
+                url = repo["url"]
+                Forks = repo["forks_count"]
+                Stars = repo["stargazers_count"]
+                Watchers = repo["watchers_count"]
+                github_repos_objects.append(
+                    GithubRepos(
+                        user_profile=self,
+                        title=title,
+                        description=description,
+                        Forks=Forks,
+                        Stars=Stars,
+                        Watchers=Watchers))
+            GithubRepos.objects.bulk_create(github_repos_objects)
+
+
+        else:
+            raise Exception("oops something went wrong!")
+         
+
 
 @receiver(post_save, sender=User)
 def create_user_profile(sender, instance, **kwargs):
     try:
         instance.userprofile.bio
     except:
-            UserProfile.objects.create(user=instance)
+        UserProfile.objects.create(user=instance)
 
+
+@receiver(post_save, sender=UserProfile)
+def create_github_repos(sender, instance, **kwargs):
+    try:
+        instance.gihub_username
+    except:
+        instance.update_repos()
+        
 
 class Skill(models.Model):
     name = models.CharField(max_length=256)
@@ -60,11 +95,13 @@ class Experience(models.Model):
     end = models.DateField(null=True,blank=True)
     is_continue = models.BooleanField(null=True,blank=True)
     position = models.CharField(max_length=256)
-    Description = models.TextField()
+    description = models.TextField()
+    def __str__(self) -> str:
+         return f"Experience | {self.user_profile.user.username}"
 
 class Education(models.Model):
     user_profile = models.ForeignKey(UserProfile,on_delete=models.CASCADE)
-    University = models.CharField(max_length=256)
+    university = models.CharField(max_length=256)
     start = models.DateField()
     end = models.DateField()
     degree = models.CharField(max_length=128)
@@ -72,17 +109,18 @@ class Education(models.Model):
 
     description = models.TextField()
 
+    def __str__(self) -> str:
+         return f"Education | {self.user_profile.user.username}"
 
+
+import requests
 class GithubRepos(models.Model):
     user_profile = models.ForeignKey(UserProfile,on_delete=models.CASCADE)
     title = models.CharField(max_length=256)
-    description = models.TextField()
-    Stars = models.IntegerField()
-    Watchers = models.IntegerField()
-    Forks = models.IntegerField()
-
-
-
+    description = models.TextField(null=True)
+    Stars = models.IntegerField(default=0)
+    Watchers = models.IntegerField(default=0)
+    Forks = models.IntegerField(default=0)
 
 
 
