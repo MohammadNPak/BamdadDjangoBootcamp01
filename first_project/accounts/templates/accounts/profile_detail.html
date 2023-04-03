@@ -106,7 +106,9 @@
         <!-- Github Repos -->
         <div class="profile-github">
           <h2 class="text-primary my-1">
-            <i class="fab fa-github"></i> Github Repos
+            <i class="fab fa-github"></i> Github Repos 
+            <a  class="badge badge-primary" href={% url 'update_github' %}>refresh repos</a>
+            {% comment %} class="badge badge-primary" class="fab fa-github" {% endcomment %}
           </h2>
           {% for repo in profile.githubrepos_set.all %}
           

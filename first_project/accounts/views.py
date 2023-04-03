@@ -1,6 +1,8 @@
 from django.shortcuts import render
 from django.contrib.auth.models import User
-from django.shortcuts import redirect,reverse
+from django.shortcuts import redirect
+from django.urls import reverse
+from django.contrib.auth.decorators import login_required
 from django.contrib.auth import authenticate,login as django_login,logout as django_logout
 from django.contrib import messages
 from django.shortcuts import get_object_or_404
@@ -45,3 +47,10 @@ def logout(request):
 def profile_detail(request,username):
     user_profile = get_object_or_404(UserProfile,user__username=username)
     return render(request,'accounts/profile_detail.html',{"profile":user_profile})
+
+@login_required
+def update_github(request):
+    # print(request.user.username)
+    # request.user.user_profile.update_repos()
+    return redirect(reverse('post_list'))
+    # return redirect(reverse('profile_detail',kwargs ={"username":request.user.username}))

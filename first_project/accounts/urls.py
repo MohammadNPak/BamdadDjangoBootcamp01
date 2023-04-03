@@ -1,5 +1,5 @@
 from django.urls import path
-from accounts.views import login,register,logout,profile_detail
+from accounts.views import login,register,logout,profile_detail,update_github
 from django.views.generic import TemplateView
 
 urlpatterns=[
@@ -11,4 +11,5 @@ urlpatterns=[
     path('logout-done',TemplateView.as_view(template_name="accounts/logout_done.html"),name="logout_done"),
     path('logout',logout,name='logout'),
     path('profile/<str:username>',profile_detail,name='profile_detail'),
+    path('profile/updategithub',update_github,name='update_github'),
 ]
