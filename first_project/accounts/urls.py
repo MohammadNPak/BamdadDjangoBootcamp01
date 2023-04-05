@@ -11,5 +11,5 @@ urlpatterns=[
     path('logout-done',TemplateView.as_view(template_name="accounts/logout_done.html"),name="logout_done"),
     path('logout',logout,name='logout'),
     path('profile/<str:username>',profile_detail,name='profile_detail'),
-    path('profile/updategithub',update_github,name='update_github'),
+    path('updategithub',update_github,name='update_github'),
 ]

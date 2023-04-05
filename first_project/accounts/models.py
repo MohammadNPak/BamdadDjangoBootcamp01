@@ -6,6 +6,9 @@ from django.contrib.auth.models import User
 from django.db.models.signals import post_save
 from django.dispatch import receiver
 
+class GitRepoUpdateFail(Exception):
+    pass
+
 class UserProfile(models.Model):
     ps_choices = (
             ("D","Developer"),
@@ -56,11 +59,11 @@ class UserProfile(models.Model):
                         Forks=Forks,
                         Stars=Stars,
                         Watchers=Watchers))
+            GithubRepos.objects.filter(user_profile=self).delete()
             GithubRepos.objects.bulk_create(github_repos_objects)
 
-
         else:
-            raise Exception("oops something went wrong!")
+            raise GitRepoUpdateFail("can not connect to github or invalid username!")
          
 
 
@@ -72,12 +75,12 @@ def create_user_profile(sender, instance, **kwargs):
         UserProfile.objects.create(user=instance)
 
 
-@receiver(post_save, sender=UserProfile)
-def create_github_repos(sender, instance, **kwargs):
-    try:
-        instance.gihub_username
-    except:
-        instance.update_repos()
+# @receiver(post_save, sender=UserProfile)
+# def create_github_repos(sender, instance, **kwargs):
+#     try:
+#         instance.gihub_username
+#     except:
+#         instance.update_repos()
         
 
 class Skill(models.Model):

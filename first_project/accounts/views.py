@@ -7,6 +7,7 @@ from django.contrib.auth import authenticate,login as django_login,logout as dja
 from django.contrib import messages
 from django.shortcuts import get_object_or_404
 from .models import UserProfile
+from .models import GitRepoUpdateFail
 # Create your views here.
 
 def login(request):
@@ -48,9 +49,15 @@ def profile_detail(request,username):
     user_profile = get_object_or_404(UserProfile,user__username=username)
     return render(request,'accounts/profile_detail.html',{"profile":user_profile})
 
-@login_required
+# @login_required
 def update_github(request):
     # print(request.user.username)
-    # request.user.user_profile.update_repos()
-    return redirect(reverse('post_list'))
-    # return redirect(reverse('profile_detail',kwargs ={"username":request.user.username}))
+    try:
+        request.user.userprofile.update_repos()
+        messages.add_message(request,messages.SUCCESS,"repoes updated successfully!")
+
+    except GitRepoUpdateFail:
+        messages.add_message(request,messages.ERROR,"can not connect to github")
+    # return redirect(reverse('post_list'))
+    finally:
+        return redirect(reverse('profile_detail',kwargs ={"username":request.user.username}))

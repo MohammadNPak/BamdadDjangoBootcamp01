@@ -17,7 +17,7 @@ def post_list(request):
         new_post_title = request.POST["new_post_title"]
         Post.objects.create(
             body=new_post_body,
-            author=User.objects.get(id=1),
+            author=request.user.userprofile,
             title=new_post_title)
 
         posts = Post.objects.all()
