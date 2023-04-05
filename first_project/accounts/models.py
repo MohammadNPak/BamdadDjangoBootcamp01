@@ -5,7 +5,7 @@ from django.db import models
 from django.contrib.auth.models import User
 from django.db.models.signals import post_save
 from django.dispatch import receiver
-
+from django.urls import reverse
 class GitRepoUpdateFail(Exception):
     pass
 
@@ -65,7 +65,9 @@ class UserProfile(models.Model):
         else:
             raise GitRepoUpdateFail("can not connect to github or invalid username!")
          
-
+    def get_absolute_url(self):
+        return reverse("profile_detail", kwargs={"username": self.user.username})
+    
 
 @receiver(post_save, sender=User)
 def create_user_profile(sender, instance, **kwargs):

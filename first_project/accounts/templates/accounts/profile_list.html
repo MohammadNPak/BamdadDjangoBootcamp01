@@ -1,0 +1,40 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block content %}
+<section class="container">
+    <h1 class="large text-primary">
+      Developers
+    </h1>
+    <p class="lead">
+      <i class="fab fa-connectdevelop"></i> Browse and connect with developers
+    </p>
+    <div class="profiles">
+        
+        {% for profile in profiles %}
+        <div class="profile bg-light">
+            <img
+              class="round-img"
+              src="{{profile.profile_picture.url}}"
+              alt=""
+            />
+    
+            <div>
+              <h2>{{profile.user.username}}</h2>
+              <p>{{profile.get_professional_status_display}} at {{profile.company}}</p>
+              <p>{{profile.location}}</p>
+              <a href="{{profile.get_absolute_url}}" class="btn btn-primary">
+                View Profile
+              </a>
+            </div>
+    
+            <ul>
+                {% for skill in profile.skill.all %}
+                <li class="text-primary"><i class="fas fa-check"></i> {{skill.name}}</li>
+                {% endfor %}
+            </ul>
+          </div>
+        
+        {% endfor %}
+    </div>
+  </section>
+{% endblock content %}

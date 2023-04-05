@@ -49,7 +49,17 @@ def profile_detail(request,username):
     user_profile = get_object_or_404(UserProfile,user__username=username)
     return render(request,'accounts/profile_detail.html',{"profile":user_profile})
 
-# @login_required
+def profile_list(request):
+    post_id = request.GET.get("post_id")
+    print(dir(request))
+    if post_id:
+        profiles=UserProfile.objects.filter(like_set=post_id)
+    else:
+        profiles=UserProfile.objects.all()
+
+    return render(request,"accounts/profile_list.html",{"profiles":profiles})
+
+@login_required
 def update_github(request):
     # print(request.user.username)
     try:

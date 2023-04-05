@@ -8,12 +8,18 @@
     <div>
       {{ post.title }}
       <p class="my-1">{{ post.body }}</p>
-      <span>{{ post.date|timesince }}</span>
+      <span>{{ post.date|timesince }}
+  
+        <a href="{% url 'profile_list' %}?post_id={{post.id}}">
+          {{ post.like.count }}
+          person likes this post
+        </a>
+        </span>
       <button class="btn">
-        <i class="fas fa-thumbs-up"></i> <span>4</span>
+        <i class="fas fa-thumbs-up"></i> <span>{{post.like.count}}</span>
       </button>
       <button class="btn">
-        <i class="fas fa-thumbs-down"></i>
+        <i class="fas fa-thumbs-down">{{post.dislike.count}}</i>
       </button>
       <a href="{{ post.get_absolute_url }}" class="btn btn-primary">Discussion</a>
     </div>

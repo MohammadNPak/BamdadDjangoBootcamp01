@@ -10,16 +10,13 @@ def post_list(request):
         posts = Post.objects.all()
         return render(request,'socialnetwork/post_list.html',context={'posts':posts})
     
-    elif request.method == "POST":
-        # do something
-       
+    elif request.method == "POST":     
         new_post_body = request.POST["new_post_body"]
         new_post_title = request.POST["new_post_title"]
         Post.objects.create(
             body=new_post_body,
             author=request.user.userprofile,
             title=new_post_title)
-
         posts = Post.objects.all()
         return render(request,'socialnetwork/post_list.html',context={'posts':posts})
 

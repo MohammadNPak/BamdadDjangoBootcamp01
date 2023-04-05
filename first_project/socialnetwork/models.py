@@ -11,6 +11,8 @@ class Post(models.Model):
     body = models.TextField()
     title = models.CharField(max_length=255)
     date = models.DateTimeField(auto_now_add=True)
+    like = models.ManyToManyField(UserProfile,related_name="like_set")
+    dislike =  models.ManyToManyField(UserProfile,related_name="dislike_set")
 
     def get_absolute_url(self):
         return reverse("post_detail", kwargs={"pk": self.pk})
