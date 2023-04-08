@@ -4,7 +4,8 @@ from django.contrib.auth.models import User
 from accounts.models import UserProfile
 
              
-
+from django import template
+register = template.Library()
 
 class Post(models.Model):
     author = models.ForeignKey(UserProfile(),on_delete=models.CASCADE)
@@ -17,6 +18,7 @@ class Post(models.Model):
     def get_absolute_url(self):
         return reverse("post_detail", kwargs={"pk": self.pk})
     
+    @register.simple_tag
     def is_liked(self,user_profile):
         return self.like.filter(id=user_profile.id).count()==1
 

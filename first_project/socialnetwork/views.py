@@ -5,11 +5,13 @@ from django.shortcuts import redirect
 from .models import Post,User
 from .forms import CommentForm
 # Create your views here.
+from django.db.models import Count
 
 @login_required
 def post_list(request):
+    posts = Post.objects.all()
+
     if request.method == "GET":
-        posts = Post.objects.all()
         return render(request,'socialnetwork/post_list.html',context={'posts':posts})
     
     elif request.method == "POST":     
@@ -19,7 +21,6 @@ def post_list(request):
             body=new_post_body,
             author=request.user.userprofile,
             title=new_post_title)
-        posts = Post.objects.all()
         return render(request,'socialnetwork/post_list.html',context={'posts':posts})
 
 
