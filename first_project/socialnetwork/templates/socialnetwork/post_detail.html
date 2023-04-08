@@ -24,8 +24,10 @@
       <div class="post-form-header bg-primary">
         <h3>Leave A Comment</h3>
       </div>
-      <form class="form my-1">
-        <textarea name="text" cols="30" rows="5" placeholder="Comment on this post"></textarea>
+      <form class="form my-1" method="post">
+        {% csrf_token %}
+
+        <textarea name="body" cols="30" rows="5" placeholder="Comment on this post" ></textarea>
         <input type="submit" class="btn btn-dark my-1" value="Submit" />
       </form>
     </div>
