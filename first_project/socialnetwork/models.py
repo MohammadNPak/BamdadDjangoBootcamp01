@@ -18,7 +18,6 @@ class Post(models.Model):
     def get_absolute_url(self):
         return reverse("post_detail", kwargs={"pk": self.pk})
     
-    @register.simple_tag
     def is_liked(self,user_profile):
         return self.like.filter(id=user_profile.id).count()==1
 

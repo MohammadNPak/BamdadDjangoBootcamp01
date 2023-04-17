@@ -11,15 +11,15 @@
       <span>{{ post.date|timesince }}
   
         <a href="{% url 'profile_list' %}?post_id={{post.id}}">
-          {{ post.like.count }}
+          {{ post.like_count }}
           person likes this post
         </a>
         </span>
-      <a class="btn {% if post.like %} btn-active {% endif %}" href="{% url 'like_post' post_id=post.id %}">
-        <i class="fas fa-thumbs-up"></i> <span>{{post.like.count}}</span>
+      <a class="btn {% if post.is_liked %} btn-active {% endif %}" href="{% url 'like_post' post_id=post.id %}">
+        <i class="fas fa-thumbs-up"></i> <span>{{post.like_count}}</span>
       </a>
       <button class="btn">
-        <i class="fas fa-thumbs-down">{{post.dislike.count}}</i>
+        <i class="fas fa-thumbs-down">{{post.dislike_count}}</i>
       </button>
       <a href="{{ post.get_absolute_url }}" class="btn btn-primary">Discussion</a>
     </div>

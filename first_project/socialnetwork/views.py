@@ -2,18 +2,21 @@ from django.shortcuts import render,get_object_or_404
 from django.contrib.auth.decorators import login_required
 from django.urls import reverse
 from django.shortcuts import redirect
-from .models import Post,User
+from .models import Post,User,UserProfile
 from .forms import CommentForm
 # Create your views here.
-from django.db.models import Count
+from django.db.models import Count,OuterRef,Exists
 
 @login_required
 def post_list(request):
-    posts = Post.objects.all()
+    
+    posts = Post.objects.annotate(
+        is_liked=Exists(UserProfile.objects.filter(
+        user=request.user, like_set__id=OuterRef('pk')))).annotate(
+        like_count=Count('like')).annotate(dislike_count=Count('dislike')).prefetch_related('author')
 
     if request.method == "GET":
         return render(request,'socialnetwork/post_list.html',context={'posts':posts})
-    
     elif request.method == "POST":     
         new_post_body = request.POST["new_post_body"]
         new_post_title = request.POST["new_post_title"]
