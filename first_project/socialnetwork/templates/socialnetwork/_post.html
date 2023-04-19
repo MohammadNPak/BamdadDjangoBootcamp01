@@ -15,9 +15,9 @@
           person likes this post
         </a>
         </span>
-      <a class="btn {% if post.is_liked %} btn-active {% endif %}" href="{% url 'like_post' post_id=post.id %}">
+      <button class="btn like-btn {% if post.is_liked %} btn-active {% endif %}" href="{% url 'like_post' post_id=post.id %}">
         <i class="fas fa-thumbs-up"></i> <span>{{post.like_count}}</span>
-      </a>
+      </button>
       <button class="btn">
         <i class="fas fa-thumbs-down">{{post.dislike_count}}</i>
       </button>

@@ -17,6 +17,12 @@ from django.conf import settings
 from django.conf.urls.static import static
 from django.contrib import admin
 from django.urls import path,include
+from socialnetwork.views import likes
+from rest_framework import routers
+
+# socialnetwork_router = routers.DefaultRouter()
+# socialnetwork_router.register(r'users',LikesView)
+
 
 urlpatterns = [
     path('__debug__/', include('debug_toolbar.urls')),
@@ -24,6 +30,8 @@ urlpatterns = [
     path('admin/', admin.site.urls),
     path('accounts/', include('accounts.urls')),
     path('', include('socialnetwork.urls')),
+    path('api/like/<int:post_id>/', likes),
+    # path('api/like2/', LikesView.as_view()),
+    # path('api/like2/', include(socialnetwork_router.urls)),
 ]
-
 urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
